@@ -1,0 +1,11 @@
+{
+  "name": "angularjs-gulp-starter",
+  "version": "0.0.1",
+  "description": "",
+  "main": "gulpfile.js",
+  "author": "Donny Mellstrom",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+  }
+}
