@@ -1,0 +1,12 @@
+@import 'angular-material.scss';
+
+html, body {
+  height: 100%; width: 100%;
+}
+
+md-content#main-content {
+  height: 100%;
+}
+md-content#main-content>* {
+  min-height: 100%;
+}
