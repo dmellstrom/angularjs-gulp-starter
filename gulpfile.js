@@ -1,9 +1,17 @@
 var gulp    = require('gulp'),
+  angularTemplatecache = require('gulp-angular-templatecache'),
+  cleanCss = require('gulp-clean-css'),
   concat = require('gulp-concat'),
   connect = require('gulp-connect'),
+  del = require('del'),
   ngAnnotate = require('gulp-ng-annotate'),
+  rev = require('gulp-rev'),
+  revReplace = require('gulp-rev-replace'),
+  runSequence = require('run-sequence'),
   sass = require('gulp-sass'),
+  shell = require('gulp-shell'),
   sourcemaps = require('gulp-sourcemaps'),
+  uglify  = require('gulp-uglify'),
   watch = require('gulp-watch');
 
 
@@ -80,3 +88,85 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', ['js', 'css', 'serve', 'reload', 'watch']);
+
+
+/* Distribution *//////////////////////////////////////////
+
+gulp.task('dist:clean', function() {
+  return del(['dist/**/*']);
+});
+
+var partials = [
+  'app/**/*.html',
+  '!app/index.html'
+];
+
+gulp.task('partials', function () {
+  return gulp.src(partials)
+    .pipe(angularTemplatecache('templates.js', { module: process.env.npm_package_config_module }))
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('dist:js-build', ['partials'], function() {
+  return gulp.src(scripts.concat(['dist/templates.js']))
+    .pipe(sourcemaps.init())
+    .pipe(concat('app.min.js'))
+    .pipe(ngAnnotate({add: true}))
+    .pipe(uglify())
+    .pipe(gulp.dest('dist'))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('dist:js', ['dist:js-build'], function() {
+  return del(['dist/templates.js']);
+});
+
+gulp.task('dist:css', function () {
+  return gulp.src(styles)
+    .pipe(sourcemaps.init())
+    .pipe(concat('app.min.scss'))
+    .pipe(sass({ includePaths: styleIncludes }).on('error', sass.logError))
+    .pipe(cleanCss())
+    .pipe(gulp.dest('dist'))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('revision', ['dist:css', 'dist:js'], function(){
+  return gulp.src(['dist/app.min.css', 'dist/app.min.js'])
+    .pipe(rev())
+    .pipe(gulp.dest('dist'))
+    .pipe(rev.manifest())
+    .pipe(gulp.dest('dist'))
+})
+
+gulp.task('dist:index', ['revision'], function() {
+  var manifest = gulp.src('dist/rev-manifest.json');
+  return gulp.src('app/index.html')
+    .pipe(revReplace({manifest: manifest}))
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('dist:app', ['dist:index'], function() {
+  return del(['dist/app.min.css', 'dist/app.min.js']);
+});
+
+gulp.task('build', function(callback) {
+  return runSequence(
+    'dist:clean',
+    'dist:app',
+    callback);
+});
+
+gulp.task('dist:serve', function () {
+  connect.server({
+    root: 'dist/',
+    port: 8888,
+    fallback: 'dist/index.html'
+  });
+});
+
+gulp.task('deploy:staging', shell.task([
+  "rsync -azvP dist/ root@203.0.113.255:/var/www/html --exclude=\".git/\" --delete",
+]));
