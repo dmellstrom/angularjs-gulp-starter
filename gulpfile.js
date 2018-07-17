@@ -152,10 +152,15 @@ gulp.task('dist:app', ['dist:index'], function() {
   return del(['dist/app.min.css', 'dist/app.min.js']);
 });
 
+gulp.task('dist:favicon', function() {
+  return gulp.src('app/favicon.png')
+    .pipe(gulp.dest('dist'));
+});
+
 gulp.task('build', function(callback) {
   return runSequence(
     'dist:clean',
-    'dist:app',
+    ['dist:app', 'dist:favicon'],
     callback);
 });
 
