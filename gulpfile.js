@@ -157,10 +157,15 @@ gulp.task('dist:favicon', function() {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('dist:images', function() {
+  return gulp.src('app/images/**/*.*')
+    .pipe(gulp.dest('dist/images'));
+});
+
 gulp.task('build', function(callback) {
   return runSequence(
     'dist:clean',
-    ['dist:app', 'dist:favicon'],
+    ['dist:app', 'dist:favicon', 'dist:images'],
     callback);
 });
 
