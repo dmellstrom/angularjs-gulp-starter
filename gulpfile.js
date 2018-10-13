@@ -7,7 +7,6 @@ var gulp    = require('gulp'),
   ngAnnotate = require('gulp-ng-annotate'),
   rev = require('gulp-rev'),
   revReplace = require('gulp-rev-replace'),
-  runSequence = require('run-sequence'),
   sass = require('gulp-sass'),
   shell = require('gulp-shell'),
   sourcemaps = require('gulp-sourcemaps'),
@@ -41,7 +40,7 @@ var styles = [
 
 /* Development *///////////////////////////////////////////
 
-gulp.task('js', function() {
+function js() {
   return gulp.src(scripts)
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.js'))
@@ -49,9 +48,9 @@ gulp.task('js', function() {
     .pipe(gulp.dest('app'))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app'));
-});
+}
 
-gulp.task('css', function () {
+function css() {
   return gulp.src(styles)
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.scss'))
@@ -59,55 +58,67 @@ gulp.task('css', function () {
     .pipe(gulp.dest('app'))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app'));
-});
 
-gulp.task('serve', function () {
+}
+
+function serve(done) {
   connect.server({
     root: 'app/',
     port: 8888,
     fallback: 'app/index.html',
     livereload: true
-  });
-});
+  }, done);
+}
 
 var built = ['app/app.min.css', 'app/app.min.js', 'app/**/*.html'];
 
-gulp.task('reload', function() {
+function reload(done) {
   gulp.src(built)
     .pipe(watch(built))
     .pipe(connect.reload());
-});
+  done();
+}
 
-gulp.task('watch', function() {
+function watch_src(done) {
   watch(scripts, function() {
-    gulp.start('js');
+    js();
   });
   watch(styles, function() {
-    gulp.start('css');
+    css();
   });
-});
+  done();
+}
 
-gulp.task('default', ['js', 'css', 'serve', 'reload', 'watch']);
+gulp.task('default',
+  gulp.series(
+    gulp.parallel(js, css),
+    gulp.parallel(serve, reload, watch_src)));
 
 
 /* Distribution *//////////////////////////////////////////
 
-gulp.task('dist:clean', function() {
+function dist_clean() {
   return del(['dist/**/*']);
-});
+}
 
-var partials = [
+var templates = [
   'app/**/*.html',
   '!app/index.html'
 ];
 
-gulp.task('partials', function () {
-  return gulp.src(partials)
-    .pipe(angularTemplatecache('templates.js', { module: process.env.npm_package_config_module }))
+function partials() {
+  return gulp.src(templates)
+    .pipe(angularTemplatecache('templates.js', {
+      module: process.env.npm_package_config_module,
+      transformUrl: function(url) {
+        // Remove leading slash which occurs in gulp 4
+        return url.replace(/^\/+/g, '');
+      }
+    }))
     .pipe(gulp.dest('dist'));
-});
+}
 
-gulp.task('dist:js-build', ['partials'], function() {
+function dist_js_build() {
   return gulp.src(scripts.concat(['dist/templates.js']))
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.js'))
@@ -116,13 +127,13 @@ gulp.task('dist:js-build', ['partials'], function() {
     .pipe(gulp.dest('dist'))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('dist'));
-});
+}
 
-gulp.task('dist:js', ['dist:js-build'], function() {
+function dist_js() {
   return del(['dist/templates.js']);
-});
+}
 
-gulp.task('dist:css', function () {
+function dist_css() {
   return gulp.src(styles)
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.scss'))
@@ -131,52 +142,60 @@ gulp.task('dist:css', function () {
     .pipe(gulp.dest('dist'))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('dist'));
-});
+}
 
-gulp.task('revision', ['dist:css', 'dist:js'], function(){
+function revision() {
   return gulp.src(['dist/app.min.css', 'dist/app.min.js'])
     .pipe(rev())
     .pipe(gulp.dest('dist'))
     .pipe(rev.manifest())
     .pipe(gulp.dest('dist'))
-})
+}
 
-gulp.task('dist:index', ['revision'], function() {
+function dist_index() {
   var manifest = gulp.src('dist/rev-manifest.json');
   return gulp.src('app/index.html')
     .pipe(revReplace({manifest: manifest}))
     .pipe(gulp.dest('dist'));
-});
+}
 
-gulp.task('dist:app', ['dist:index'], function() {
+function dist_app() {
   return del(['dist/app.min.css', 'dist/app.min.js']);
-});
+}
 
-gulp.task('dist:favicon', function() {
+function dist_favicon() {
   return gulp.src('app/favicon.png')
     .pipe(gulp.dest('dist'));
-});
+}
 
-gulp.task('dist:images', function() {
+function dist_images() {
   return gulp.src('app/images/**/*.*')
     .pipe(gulp.dest('dist/images'));
-});
+}
 
-gulp.task('build', function(callback) {
-  return runSequence(
-    'dist:clean',
-    ['dist:app', 'dist:favicon', 'dist:images'],
-    callback);
-});
+gulp.task('build', gulp.series(
+  dist_clean,
+  gulp.parallel(
+    gulp.series(
+      gulp.parallel(
+        gulp.series(partials, dist_js_build, dist_js),
+        dist_css),
+      revision,
+      dist_index,
+      dist_app),
+    dist_favicon,
+    dist_images)));
 
-gulp.task('dist:serve', function () {
+function dist_serve(done) {
   connect.server({
     root: 'dist/',
     port: 8888,
     fallback: 'dist/index.html'
   });
-});
+  done();
+}
+gulp.task(dist_serve);
 
-gulp.task('deploy:staging', shell.task([
+gulp.task('deploy_staging', shell.task([
   "rsync -azvP dist/ root@203.0.113.255:/var/www/html --exclude=\".git/\" --delete",
 ]));
