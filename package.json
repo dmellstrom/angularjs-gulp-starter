@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "del": "^3.0.0",
-    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp": "^4.0.0",
     "gulp-angular-templatecache": "^2.2.1",
     "gulp-clean-css": "^3.10.0",
     "gulp-cli": "^2.0.1",
