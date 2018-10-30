@@ -13,8 +13,6 @@ The default gulp task will serve the application to `localhost:8888`, watch sour
 
 ## Preparing for Distribution
 
-If the root module name has been changed from `myapp`, it is necessary to configure the new name in `package.json`. Then simply execute
-
     npm run build
 
 The `build` script triggers minification and versioning of the JavaScript and CSS, outputting the results to the `dist` directory along with all other necessary assets.

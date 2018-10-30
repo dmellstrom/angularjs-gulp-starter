@@ -109,7 +109,6 @@ var templates = [
 function partials() {
   return gulp.src(templates)
     .pipe(angularTemplatecache('templates.js', {
-      module: process.env.npm_package_config_module,
       moduleSystem: 'IIFE',
       transformUrl: function(url) {
         // Remove leading slash which occurs in gulp 4

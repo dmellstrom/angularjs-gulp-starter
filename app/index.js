@@ -1,7 +1,8 @@
 (function() {
   "use strict";
 
-  angular.module('myApp', ['ngRoute', 'ngMaterial']);
+  angular.module('templates', []);
+  angular.module('myApp', ['ngRoute', 'ngMaterial', 'templates']);
 
   function config ($routeProvider, $locationProvider, $mdThemingProvider) {
     $routeProvider

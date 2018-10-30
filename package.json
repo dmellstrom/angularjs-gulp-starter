@@ -2,9 +2,6 @@
   "name": "angularjs-gulp-starter",
   "version": "0.0.1",
   "license": "MIT",
-  "config": {
-    "module": "myApp"
-  },
   "scripts": {
     "start": "gulp",
     "build": "gulp build",
