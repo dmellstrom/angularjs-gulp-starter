@@ -5,6 +5,8 @@
   angular.module('myApp', ['ngRoute', 'ngMaterial', 'templates']);
 
   function config ($routeProvider, $locationProvider, $mdThemingProvider) {
+    "ngInject";
+
     $routeProvider
       .when('/', {
         templateUrl: 'views/home/home.view.html',
@@ -33,6 +35,6 @@
   
   angular
     .module('myApp')
-    .config(['$routeProvider', '$locationProvider', '$mdThemingProvider', config])
-    .run([run]);
+    .config(config)
+    .run(run);
 })();
