@@ -4,7 +4,7 @@
   angular.module('templates', []);
   angular.module('myApp', ['ngRoute', 'ngMaterial', 'templates']);
 
-  function config ($routeProvider, $locationProvider, $mdThemingProvider) {
+  function config ($routeProvider, $locationProvider, $mdThemingProvider, $compileProvider, $httpProvider) {
     "ngInject";
 
     $routeProvider
@@ -27,6 +27,12 @@
     $mdThemingProvider.theme('default')
       .primaryPalette('grey')
       .accentPalette('orange');
+
+    // Performance tweaks
+    $compileProvider.debugInfoEnabled(false);
+    $compileProvider.commentDirectivesEnabled(false);
+    $compileProvider.cssClassDirectivesEnabled(false);
+    $httpProvider.useApplyAsync(true);
   }
 
   function run() {
