@@ -1,4 +1,4 @@
-var gulp    = require('gulp'),
+const { series, parallel, src, dest } = require('gulp'),
   angularTemplatecache = require('gulp-angular-templatecache'),
   cleanCss = require('gulp-clean-css'),
   concat = require('gulp-concat'),
@@ -14,7 +14,7 @@ var gulp    = require('gulp'),
   watch = require('gulp-watch');
 
 
-var scripts = [
+const scripts = [
   'node_modules/angular/angular.js',
   'node_modules/angular-*/*.js',
   '!node_modules/angular*/*.min.js',
@@ -29,7 +29,7 @@ var scripts = [
   '!app/app.min.js'
 ];
 
-var styles = [
+const styles = [
   'app/index.scss',
   'app/directives/**/*.scss',
   'app/views/**/*.scss'
@@ -41,23 +41,23 @@ var styles = [
 /* Development *///////////////////////////////////////////
 
 function js() {
-  return gulp.src(scripts)
+  return src(scripts)
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.js'))
     .pipe(ngAnnotate({add: true}))
-    .pipe(gulp.dest('app'))
+    .pipe(dest('app'))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('app'));
+    .pipe(dest('app'));
 }
 
 function css() {
-  return gulp.src(styles)
+  return src(styles)
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.scss'))
     .pipe(sass({ includePaths: styleIncludes }).on('error', sass.logError))
-    .pipe(gulp.dest('app'))
+    .pipe(dest('app'))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('app'));
+    .pipe(dest('app'));
 
 }
 
@@ -70,10 +70,10 @@ function serve(done) {
   }, done);
 }
 
-var built = ['app/app.min.css', 'app/app.min.js', 'app/**/*.html'];
+const built = ['app/app.min.css', 'app/app.min.js', 'app/**/*.html'];
 
 function reload(done) {
-  gulp.src(built)
+  src(built)
     .pipe(watch(built))
     .pipe(connect.reload());
   done();
@@ -89,10 +89,10 @@ function watch_src(done) {
   done();
 }
 
-gulp.task('default',
-  gulp.series(
-    gulp.parallel(js, css),
-    gulp.parallel(serve, reload, watch_src)));
+exports.default = series(
+  parallel(js, css),
+  parallel(serve, reload, watch_src)
+);
 
 
 /* Distribution *//////////////////////////////////////////
@@ -101,13 +101,13 @@ function dist_clean() {
   return del(['dist/**/*']);
 }
 
-var templates = [
+const templates = [
   'app/**/*.html',
   '!app/index.html'
 ];
 
 function partials() {
-  return gulp.src(templates)
+  return src(templates)
     .pipe(angularTemplatecache('templates.js', {
       moduleSystem: 'IIFE',
       transformUrl: function(url) {
@@ -115,18 +115,18 @@ function partials() {
         return url.replace(/^\/+/g, '');
       }
     }))
-    .pipe(gulp.dest('dist'));
+    .pipe(dest('dist'));
 }
 
 function dist_js_build() {
-  return gulp.src(scripts.concat(['dist/templates.js']))
+  return src(scripts.concat(['dist/templates.js']))
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.js'))
     .pipe(ngAnnotate({add: true}))
     .pipe(uglify())
-    .pipe(gulp.dest('dist'))
+    .pipe(dest('dist'))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('dist'));
+    .pipe(dest('dist'));
 }
 
 function dist_js() {
@@ -134,29 +134,29 @@ function dist_js() {
 }
 
 function dist_css() {
-  return gulp.src(styles)
+  return src(styles)
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.scss'))
     .pipe(sass({ includePaths: styleIncludes }).on('error', sass.logError))
     .pipe(cleanCss())
-    .pipe(gulp.dest('dist'))
+    .pipe(dest('dist'))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('dist'));
+    .pipe(dest('dist'));
 }
 
 function revision() {
-  return gulp.src(['dist/app.min.css', 'dist/app.min.js'])
+  return src(['dist/app.min.css', 'dist/app.min.js'])
     .pipe(rev())
-    .pipe(gulp.dest('dist'))
+    .pipe(dest('dist'))
     .pipe(rev.manifest())
-    .pipe(gulp.dest('dist'))
+    .pipe(dest('dist'))
 }
 
 function dist_index() {
-  var manifest = gulp.src('dist/rev-manifest.json');
-  return gulp.src('app/index.html')
+  const manifest = src('dist/rev-manifest.json');
+  return src('app/index.html')
     .pipe(revReplace({manifest: manifest}))
-    .pipe(gulp.dest('dist'));
+    .pipe(dest('dist'));
 }
 
 function dist_app() {
@@ -164,27 +164,31 @@ function dist_app() {
 }
 
 function dist_favicon() {
-  return gulp.src('app/favicon.png')
-    .pipe(gulp.dest('dist'));
+  return src('app/favicon.png')
+    .pipe(dest('dist'));
 }
 
 function dist_images() {
-  return gulp.src('app/images/**/*.*')
-    .pipe(gulp.dest('dist/images'));
+  return src('app/images/**/*.*')
+    .pipe(dest('dist/images'));
 }
 
-gulp.task('build', gulp.series(
+exports.build = series(
   dist_clean,
-  gulp.parallel(
-    gulp.series(
-      gulp.parallel(
-        gulp.series(partials, dist_js_build, dist_js),
-        dist_css),
+  parallel(
+    series(
+      parallel(
+        series(partials, dist_js_build, dist_js),
+        dist_css
+      ),
       revision,
       dist_index,
-      dist_app),
+      dist_app
+    ),
     dist_favicon,
-    dist_images)));
+    dist_images
+  )
+);
 
 function dist_serve(done) {
   connect.server({
@@ -194,8 +198,10 @@ function dist_serve(done) {
   });
   done();
 }
-gulp.task(dist_serve);
+exports.dist_serve = dist_serve;
 
-gulp.task('deploy_staging', shell.task([
+function deploy_staging() {
+  return shell.task([
   "rsync -azvP dist/ root@203.0.113.255:/var/www/html --exclude=\".git/\" --delete",
-]));
+  ]);
+}
