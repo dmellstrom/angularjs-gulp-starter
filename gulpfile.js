@@ -1,4 +1,4 @@
-const { series, parallel, src, dest } = require('gulp'),
+const { series, parallel, src, dest, watch } = require('gulp'),
   angularTemplatecache = require('gulp-angular-templatecache'),
   cleanCss = require('gulp-clean-css'),
   concat = require('gulp-concat'),
@@ -10,8 +10,7 @@ const { series, parallel, src, dest } = require('gulp'),
   sass = require('gulp-sass'),
   shell = require('gulp-shell'),
   sourcemaps = require('gulp-sourcemaps'),
-  uglify  = require('gulp-uglify'),
-  watch = require('gulp-watch');
+  uglify  = require('gulp-uglify');
 
 
 const scripts = [
@@ -70,28 +69,31 @@ function serve(done) {
   }, done);
 }
 
-const built = ['app/app.min.css', 'app/app.min.js', 'app/**/*.html'];
-
-function reload(done) {
-  src(built)
-    .pipe(watch(built))
+function reload(path) {
+  return src(path)
     .pipe(connect.reload());
-  done();
+}
+
+function reload_js() {
+  return reload('app/app.min.js');
+}
+
+function reload_css() {
+  return reload('app/app.min.css');
 }
 
 function watch_src(done) {
-  watch(scripts, function() {
-    js();
-  });
-  watch(styles, function() {
-    css();
-  });
+  watch(['app/**/*.html'])
+    .on('all', (event, path) => reload(path)
+  );
+  watch(scripts, series(js, reload_js));
+  watch(styles, series(css, reload_css));
   done();
 }
 
 exports.default = series(
   parallel(js, css),
-  parallel(serve, reload, watch_src)
+  parallel(serve, watch_src)
 );
 
 
