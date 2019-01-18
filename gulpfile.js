@@ -9,7 +9,6 @@ const { series, parallel, src, dest, watch } = require('gulp'),
   revReplace = require('gulp-rev-replace'),
   sass = require('gulp-sass'),
   shell = require('gulp-shell'),
-  sourcemaps = require('gulp-sourcemaps'),
   uglify  = require('gulp-uglify');
 
 
@@ -40,24 +39,17 @@ const styles = [
 /* Development *///////////////////////////////////////////
 
 function js() {
-  return src(scripts)
-    .pipe(sourcemaps.init())
+  return src(scripts, { sourcemaps: true })
     .pipe(concat('app.min.js'))
     .pipe(ngAnnotate({add: true}))
-    .pipe(dest('app'))
-    .pipe(sourcemaps.write('./'))
-    .pipe(dest('app'));
+    .pipe(dest('app', { sourcemaps: '.' }))
 }
 
 function css() {
-  return src(styles)
-    .pipe(sourcemaps.init())
+  return src(styles, { sourcemaps: true })
     .pipe(concat('app.min.scss'))
     .pipe(sass({ includePaths: styleIncludes }).on('error', sass.logError))
-    .pipe(dest('app'))
-    .pipe(sourcemaps.write('./'))
-    .pipe(dest('app'));
-
+    .pipe(dest('app', { sourcemaps: '.' }))
 }
 
 function serve(done) {
@@ -121,14 +113,11 @@ function partials() {
 }
 
 function dist_js_build() {
-  return src(scripts.concat(['dist/templates.js']))
-    .pipe(sourcemaps.init())
+  return src(scripts.concat(['dist/templates.js']), { sourcemaps: true })
     .pipe(concat('app.min.js'))
     .pipe(ngAnnotate({add: true}))
     .pipe(uglify())
-    .pipe(dest('dist'))
-    .pipe(sourcemaps.write('./'))
-    .pipe(dest('dist'));
+    .pipe(dest('dist', { sourcemaps: '.' }));
 }
 
 function dist_js() {
@@ -136,14 +125,11 @@ function dist_js() {
 }
 
 function dist_css() {
-  return src(styles)
-    .pipe(sourcemaps.init())
+  return src(styles, { sourcemaps: true })
     .pipe(concat('app.min.scss'))
     .pipe(sass({ includePaths: styleIncludes }).on('error', sass.logError))
     .pipe(cleanCss())
-    .pipe(dest('dist'))
-    .pipe(sourcemaps.write('./'))
-    .pipe(dest('dist'));
+    .pipe(dest('dist', { sourcemaps: '.' }));
 }
 
 function revision() {
