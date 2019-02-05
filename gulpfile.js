@@ -6,7 +6,7 @@ const { series, parallel, src, dest, watch } = require('gulp'),
   del = require('del'),
   ngAnnotate = require('gulp-ng-annotate'),
   rev = require('gulp-rev'),
-  revReplace = require('gulp-rev-replace'),
+  revRewrite = require('gulp-rev-rewrite'),
   sass = require('gulp-sass'),
   shell = require('gulp-shell'),
   uglify  = require('gulp-uglify');
@@ -143,7 +143,7 @@ function revision() {
 function dist_index() {
   const manifest = src('dist/rev-manifest.json');
   return src('app/index.html')
-    .pipe(revReplace({manifest: manifest}))
+    .pipe(revRewrite({manifest: manifest}))
     .pipe(dest('dist'));
 }
 
