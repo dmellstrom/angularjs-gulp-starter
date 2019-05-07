@@ -16,10 +16,10 @@
     "angular-route": "^1.7.8"
   },
   "devDependencies": {
-    "del": "^3.0.0",
-    "gulp": "^4.0.0",
-    "gulp-angular-templatecache": "^2.2.6",
-    "gulp-clean-css": "^3.10.0",
+    "del": "^4.1.1",
+    "gulp": "^4.0.2",
+    "gulp-angular-templatecache": "^3.0.0",
+    "gulp-clean-css": "^4.2.0",
     "gulp-cli": "^2.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-connect": "^5.6.1",
@@ -27,7 +27,7 @@
     "gulp-rev": "^9.0.0",
     "gulp-rev-rewrite": "^1.1.4",
     "gulp-sass": "^4.0.2",
-    "gulp-shell": "^0.6.5",
+    "gulp-shell": "^0.7.0",
     "gulp-uglify": "^3.0.1"
   }
 }
