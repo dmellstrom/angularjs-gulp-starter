@@ -3,7 +3,11 @@
 
   angular
     .module('myApp')
-    .controller('NavbarController', NavbarController);
+    .component('navbar', {
+      templateUrl: 'directives/navbar/navbar.template.html',
+      controller: ('NavbarController', NavbarController),
+      controllerAs: 'vm'
+    });
 
   function NavbarController() {
     "ngInject";

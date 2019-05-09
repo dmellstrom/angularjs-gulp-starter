@@ -7,6 +7,6 @@ html, body {
 md-content#main-content {
   height: 100%;
 }
-md-content#main-content>* {
+md-content#main-content>*, md-content#main-content>*>* {
   min-height: 100%;
 }

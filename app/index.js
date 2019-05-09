@@ -9,14 +9,10 @@
 
     $routeProvider
       .when('/', {
-        templateUrl: 'views/home/home.view.html',
-        controller: 'HomeController',
-        controllerAs: 'vm'
+        template: '<home></home>'
       })
       .when('/about', {
-        templateUrl: 'views/about/about.view.html',
-        controller: 'AboutController',
-        controllerAs: 'vm'
+        template: '<about></about>'
       })
       .otherwise({redirectTo: '/'});
 

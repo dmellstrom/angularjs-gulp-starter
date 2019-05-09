@@ -3,7 +3,11 @@
   
   angular
     .module('myApp')
-    .controller('HomeController', HomeController);
+    .component('home', {
+      templateUrl: 'views/home/home.view.html',
+      controller: ('HomeController', HomeController),
+      controllerAs: 'vm'
+    });
 
   function HomeController() {
     "ngInject";
