@@ -1,9 +1,6 @@
 (function() {
   "use strict";
 
-  angular.module('templates', []);
-  angular.module('myApp', ['ngRoute', 'ngMaterial', 'templates']);
-
   function config ($routeProvider, $locationProvider, $mdThemingProvider, $compileProvider, $httpProvider) {
     "ngInject";
 

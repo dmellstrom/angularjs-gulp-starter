@@ -11,6 +11,12 @@
 
 The default gulp task will serve the application to `localhost:8888`, watch source files for changes, and livereload any recompiled assets.
 
+## Unit Testing
+
+    npm test
+
+Karma will launch configured web browsers (Chrome by default), watch the source, and re-run Jasmine specs on any change.
+
 ## Preparing for Distribution
 
     npm run build

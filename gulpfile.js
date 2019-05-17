@@ -16,14 +16,15 @@ const scripts = [
   'node_modules/angular/angular.js',
   'node_modules/angular-*/*.js',
   '!node_modules/angular*/*.min.js',
-  '!node_modules/angular*/*.test.js',
   '!node_modules/angular*/*-mocks.js',
   '!node_modules/angular*/index.js',
+  '!node_modules/angular-mocks/*.js',
+  'app/app.module.js',
   'app/index.js',
   'app/services/**/*.js',
   'app/directives/**/*.js',
   'app/views/**/*.js',
-  '!app/**/*.test.js',
+  '!app/**/*.spec.js',
   '!app/app.min.js'
 ];
 
