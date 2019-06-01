@@ -36,21 +36,20 @@ const styles = [
   'node_modules/angular-material'
 ];
 
-
 /* Development *///////////////////////////////////////////
 
 function js() {
   return src(scripts, { sourcemaps: true })
     .pipe(concat('app.min.js'))
     .pipe(ngAnnotate({add: true}))
-    .pipe(dest('app', { sourcemaps: '.' }))
+    .pipe(dest('app', { sourcemaps: '.' }));
 }
 
 function css() {
   return src(styles, { sourcemaps: true })
     .pipe(concat('app.min.scss'))
     .pipe(sass({ includePaths: styleIncludes }).on('error', sass.logError))
-    .pipe(dest('app', { sourcemaps: '.' }))
+    .pipe(dest('app', { sourcemaps: '.' }));
 }
 
 function serve(done) {
@@ -77,8 +76,7 @@ function reload_css() {
 
 function watch_src(done) {
   watch(['app/**/*.html'])
-    .on('all', (event, path) => reload(path)
-  );
+    .on('all', (event, path) => reload(path));
   watch(scripts, series(js, reload_js));
   watch(styles, series(css, reload_css));
   done();
@@ -138,7 +136,7 @@ function revision() {
     .pipe(rev())
     .pipe(dest('dist'))
     .pipe(rev.manifest())
-    .pipe(dest('dist'))
+    .pipe(dest('dist'));
 }
 
 function dist_index() {
@@ -149,7 +147,7 @@ function dist_index() {
 }
 
 function dist_app() {
-  return del(['dist/app.min.css', 'dist/app.min.js']);
+  return del(['dist/app.min.css', 'dist/app.min.js', 'dist/rev-manifest.json']);
 }
 
 function dist_favicon() {
@@ -184,8 +182,7 @@ function dist_serve(done) {
     root: 'dist/',
     port: 8888,
     fallback: 'dist/index.html'
-  });
-  done();
+  }, done);
 }
 exports.dist_serve = dist_serve;
 
