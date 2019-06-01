@@ -1,18 +1,13 @@
-(function() {
-  "use strict";
-  
-  angular
-    .module('myApp')
-    .component('about', {
-      templateUrl: 'views/about/about.view.html',
-      controller: ('AboutController', AboutController),
-      controllerAs: 'vm'
-    });
-  
-  function AboutController() {
-    "ngInject";
+angular
+  .module('myApp')
+  .component('about', {
+    templateUrl: 'views/about/about.view.html',
+    controller: ('AboutController', AboutController),
+    controllerAs: 'vm'
+  });
 
-    var vm = this;
-  }
+function AboutController() {
+  "ngInject";
 
-})();
+  var vm = this;
+}

@@ -4,6 +4,9 @@ const { series, parallel, src, dest, watch } = require('gulp'),
   concat = require('gulp-concat'),
   connect = require('gulp-connect'),
   del = require('del'),
+  footer = require('gulp-footer'),
+  gulpIf = require('gulp-if'),
+  header = require('gulp-header'),
   ngAnnotate = require('gulp-ng-annotate'),
   rev = require('gulp-rev'),
   revRewrite = require('gulp-rev-rewrite'),
@@ -36,10 +39,16 @@ const styles = [
   'node_modules/angular-material'
 ];
 
+function is_src(file) {
+  return !/node_modules/.test(file.path);
+}
+
 /* Development *///////////////////////////////////////////
 
 function js() {
   return src(scripts, { sourcemaps: true })
+    .pipe(gulpIf(is_src, header('(function() { "use strict";\n')))
+    .pipe(gulpIf(is_src, footer('\n})();')))
     .pipe(concat('app.min.js'))
     .pipe(ngAnnotate({add: true}))
     .pipe(dest('app', { sourcemaps: '.' }));
@@ -102,7 +111,6 @@ const templates = [
 function partials() {
   return src(templates)
     .pipe(angularTemplatecache('templates.js', {
-      moduleSystem: 'IIFE',
       transformUrl: function(url) {
         // Remove leading slash which occurs in gulp 4
         return url.replace(/^\/+/g, '');
@@ -113,6 +121,8 @@ function partials() {
 
 function dist_js_build() {
   return src(scripts.concat(['dist/templates.js']), { sourcemaps: true })
+    .pipe(gulpIf(is_src, header('(function() { "use strict";\n')))
+    .pipe(gulpIf(is_src, footer('\n})();')))
     .pipe(concat('app.min.js'))
     .pipe(ngAnnotate({add: true}))
     .pipe(uglify())
