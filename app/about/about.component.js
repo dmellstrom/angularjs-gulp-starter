@@ -1,7 +1,7 @@
 angular
-  .module('myApp')
+  .module('app.about')
   .component('about', {
-    templateUrl: 'views/about/about.view.html',
+    templateUrl: 'about/about.view.html',
     controller: ('AboutController', AboutController),
     controllerAs: 'vm'
   });

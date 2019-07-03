@@ -1,2 +1,9 @@
 angular.module('templates', []);
-angular.module('myApp', ['ngRoute', 'ngMaterial', 'templates']);
+angular.module('app', [
+  'ngRoute',
+  'ngMaterial',
+  'templates',
+  'app.navbar',
+  'app.home',
+  'app.about',
+]);

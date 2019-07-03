@@ -1,7 +1,7 @@
 angular
-  .module('myApp')
+  .module('app.navbar')
   .component('navbar', {
-    templateUrl: 'directives/navbar/navbar.template.html',
+    templateUrl: 'navbar/navbar.template.html',
     controller: ('NavbarController', NavbarController),
     controllerAs: 'vm'
   });

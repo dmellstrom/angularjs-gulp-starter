@@ -26,10 +26,10 @@ function config ($routeProvider, $locationProvider, $mdThemingProvider, $compile
 }
 
 function run() {
-  console.log('Module myApp running');
+  console.log('Module "app" running');
 }
 
 angular
-  .module('myApp')
+  .module('app')
   .config(config)
   .run(run);

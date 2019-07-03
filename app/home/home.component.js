@@ -1,7 +1,7 @@
 angular
-  .module('myApp')
+  .module('app.home')
   .component('home', {
-    templateUrl: 'views/home/home.view.html',
+    templateUrl: 'home/home.view.html',
     controller: ('HomeController', HomeController),
     controllerAs: 'vm'
   });

@@ -1,7 +1,7 @@
 'use strict';
 
 describe('navbar', function() {
-  beforeEach(module('myApp'));
+  beforeEach(module('app.navbar'));
 
   describe('NavbarController', function() {
     var ctrl;

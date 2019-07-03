@@ -22,19 +22,17 @@ const scripts = [
   '!node_modules/angular*/*-mocks.js',
   '!node_modules/angular*/index.js',
   '!node_modules/angular-mocks/*.js',
+  'app/**/*.module.js',
   'app/app.module.js',
   'app/index.js',
-  'app/services/**/*.js',
-  'app/directives/**/*.js',
-  'app/views/**/*.js',
+  'app/**/*.js',
   '!app/**/*.spec.js',
   '!app/app.min.js'
 ];
 
 const styles = [
   'app/index.scss',
-  'app/directives/**/*.scss',
-  'app/views/**/*.scss'
+  'app/**/*.scss'
 ], styleIncludes = [
   'node_modules/angular-material'
 ];
