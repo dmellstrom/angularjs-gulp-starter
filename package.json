@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "angular-mocks": "^1.7.8",
-    "del": "^4.1.1",
+    "del": "^5.0.0",
     "gulp": "^4.0.2",
     "gulp-angular-templatecache": "^3.0.0",
     "gulp-clean-css": "^4.2.0",
@@ -26,17 +26,17 @@
     "gulp-concat": "^2.6.1",
     "gulp-connect": "^5.6.1",
     "gulp-footer": "^2.0.2",
-    "gulp-header": "^2.0.7",
-    "gulp-if": "^2.0.2",
+    "gulp-header": "^2.0.9",
+    "gulp-if": "^3.0.0",
     "gulp-ng-annotate-patched": "^0.1.0",
     "gulp-rev": "^9.0.0",
-    "gulp-rev-rewrite": "^1.1.4",
+    "gulp-rev-rewrite": "^2.0.0",
     "gulp-sass": "^4.0.2",
-    "gulp-shell": "^0.7.0",
+    "gulp-shell": "^0.7.1",
     "gulp-uglify": "^3.0.1",
     "jasmine-core": "^3.4.0",
-    "karma": "^4.1.0",
-    "karma-chrome-launcher": "^2.2.0",
+    "karma": "^4.2.0",
+    "karma-chrome-launcher": "^3.0.0",
     "karma-jasmine": "^2.0.1"
   }
 }
