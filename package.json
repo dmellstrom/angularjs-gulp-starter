@@ -5,6 +5,8 @@
   "scripts": {
     "start": "gulp",
     "test": "karma start karma.conf.js",
+    "e2e": "protractor e2e/protractor.conf.js",
+    "update-webdriver": "webdriver-manager update",
     "build": "gulp build",
     "preview": "gulp dist_serve"
   },
@@ -37,6 +39,7 @@
     "jasmine-core": "^3.4.0",
     "karma": "^4.2.0",
     "karma-chrome-launcher": "^3.0.0",
-    "karma-jasmine": "^2.0.1"
+    "karma-jasmine": "^2.0.1",
+    "protractor": "^5.4.2"
   }
 }

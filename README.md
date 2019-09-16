@@ -17,6 +17,19 @@ The default gulp task will serve the application to `localhost:8888`, watch sour
 
 Karma will launch configured web browsers (Chrome by default), watch the source, and re-run Jasmine specs on any change.
 
+## End-to-End Testing
+
+The end-to-end testing setup uses Protractor, which relies on Selenium, and thus requires JDK to be installed.
+As another one-time prerequisite, install the latest WebDriver.
+
+    npm run update-webdriver
+
+With the default serve task running in the background, start Protractor to execute the test scenarios from the `e2e` directory against the served application.
+
+    npm run protractor
+
+It's also possible to run e2e tests against a distribution build. See 'Previewing the Build' below.
+
 ## Preparing for Distribution
 
     npm run build
