@@ -26,7 +26,7 @@ As another one-time prerequisite, install the latest WebDriver.
 
 With the default serve task running in the background, start Protractor to execute the test scenarios from the `e2e` directory against the served application.
 
-    npm run protractor
+    npm run e2e
 
 It's also possible to run e2e tests against a distribution build. See 'Previewing the Build' below.
 
