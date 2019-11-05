@@ -193,9 +193,3 @@ function dist_serve(done) {
   }, done);
 }
 exports.dist_serve = dist_serve;
-
-function deploy_staging() {
-  return shell.task([
-  "rsync -azvP dist/ root@203.0.113.255:/var/www/html --exclude=\".git/\" --delete",
-  ]);
-}
