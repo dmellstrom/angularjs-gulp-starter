@@ -1,8 +1,12 @@
 angular
   .module('app.navbar')
+  .controller('NavbarController', NavbarController)
+
+angular
+  .module('app.navbar')
   .component('navbar', {
     templateUrl: 'navbar/navbar.template.html',
-    controller: ('NavbarController', NavbarController),
+    controller: 'NavbarController',
     controllerAs: 'vm'
   });
 
