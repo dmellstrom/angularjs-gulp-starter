@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- `node >= 8.0.0`/`npm >= 5.0.0`
+- `node >= 10.0.0`/`npm >= 5.6.0`
 
 ## Getting Started
 

@@ -14,7 +14,7 @@
     "angular": "^1.7.9",
     "angular-animate": "^1.7.9",
     "angular-aria": "^1.7.9",
-    "angular-material": "^1.1.20",
+    "angular-material": "^1.1.21",
     "angular-messages": "^1.7.9",
     "angular-route": "^1.7.9"
   },
@@ -32,14 +32,14 @@
     "gulp-if": "^3.0.0",
     "gulp-ng-annotate-patched": "^0.1.1",
     "gulp-rev": "^9.0.0",
-    "gulp-rev-rewrite": "^2.0.0",
+    "gulp-rev-rewrite": "^3.0.1",
     "gulp-sass": "^4.0.2",
     "gulp-shell": "^0.7.1",
     "gulp-uglify": "^3.0.1",
     "jasmine-core": "^3.5.0",
     "karma": "^4.4.1",
     "karma-chrome-launcher": "^3.1.0",
-    "karma-jasmine": "^2.0.1",
-    "protractor": "^5.4.2"
+    "karma-jasmine": "^3.1.0",
+    "protractor": "^5.4.3"
   }
 }
