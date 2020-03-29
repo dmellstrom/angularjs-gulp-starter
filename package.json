@@ -23,7 +23,7 @@
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-angular-templatecache": "^3.0.0",
-    "gulp-clean-css": "^4.2.0",
+    "gulp-clean-css": "^4.3.0",
     "gulp-cli": "^2.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-connect": "^5.6.1",
@@ -32,14 +32,14 @@
     "gulp-if": "^3.0.0",
     "gulp-ng-annotate-patched": "^0.1.1",
     "gulp-rev": "^9.0.0",
-    "gulp-rev-rewrite": "^3.0.1",
+    "gulp-rev-rewrite": "^3.0.2",
     "gulp-sass": "^4.0.2",
-    "gulp-shell": "^0.7.1",
+    "gulp-shell": "^0.8.0",
     "gulp-uglify": "^3.0.1",
     "jasmine-core": "^3.5.0",
     "karma": "^4.4.1",
     "karma-chrome-launcher": "^3.1.0",
-    "karma-jasmine": "^3.1.0",
+    "karma-jasmine": "^3.1.1",
     "protractor": "^5.4.3"
   }
 }
