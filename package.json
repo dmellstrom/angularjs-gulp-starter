@@ -11,20 +11,20 @@
     "preview": "gulp dist_serve"
   },
   "dependencies": {
-    "angular": "^1.7.9",
-    "angular-animate": "^1.7.9",
-    "angular-aria": "^1.7.9",
-    "angular-material": "^1.1.21",
-    "angular-messages": "^1.7.9",
-    "angular-route": "^1.7.9"
+    "angular": "^1.8.0",
+    "angular-animate": "^1.8.0",
+    "angular-aria": "^1.8.0",
+    "angular-material": "^1.1.24",
+    "angular-messages": "^1.8.0",
+    "angular-route": "^1.8.0"
   },
   "devDependencies": {
-    "angular-mocks": "^1.7.9",
+    "angular-mocks": "^1.8.0",
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-angular-templatecache": "^3.0.0",
     "gulp-clean-css": "^4.3.0",
-    "gulp-cli": "^2.0.1",
+    "gulp-cli": "^2.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-connect": "^5.6.1",
     "gulp-footer": "^2.0.2",
@@ -32,14 +32,14 @@
     "gulp-if": "^3.0.0",
     "gulp-ng-annotate-patched": "^0.1.1",
     "gulp-rev": "^9.0.0",
-    "gulp-rev-rewrite": "^3.0.2",
-    "gulp-sass": "^4.0.2",
+    "gulp-rev-rewrite": "^3.0.3",
+    "gulp-sass": "^4.1.0",
     "gulp-shell": "^0.8.0",
     "gulp-uglify": "^3.0.1",
     "jasmine-core": "^3.5.0",
-    "karma": "^4.4.1",
+    "karma": "^5.1.0",
     "karma-chrome-launcher": "^3.1.0",
-    "karma-jasmine": "^3.1.1",
-    "protractor": "^5.4.3"
+    "karma-jasmine": "^3.3.1",
+    "protractor": "^7.0.0"
   }
 }
