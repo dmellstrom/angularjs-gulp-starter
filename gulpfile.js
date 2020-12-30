@@ -1,4 +1,5 @@
-const { series, parallel, src, dest, watch } = require('gulp'),
+const { readFileSync } = require('fs'),
+  { series, parallel, src, dest, watch } = require('gulp'),
   angularTemplatecache = require('gulp-angular-templatecache'),
   cleanCss = require('gulp-clean-css'),
   concat = require('gulp-concat'),
@@ -148,9 +149,9 @@ function revision() {
 }
 
 function dist_index() {
-  const manifest = src('dist/rev-manifest.json');
+  const manifest = readFileSync('dist/rev-manifest.json');
   return src('app/index.html')
-    .pipe(revRewrite({manifest: manifest}))
+    .pipe(revRewrite({ manifest }))
     .pipe(dest('dist'));
 }
 
