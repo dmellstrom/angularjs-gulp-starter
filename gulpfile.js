@@ -11,7 +11,7 @@ const { readFileSync } = require('fs'),
   ngAnnotate = require('gulp-ng-annotate-patched'),
   rev = require('gulp-rev'),
   revRewrite = require('gulp-rev-rewrite'),
-  sass = require('gulp-sass'),
+  sass = require('gulp-sass')(require('node-sass')),
   shell = require('gulp-shell'),
   uglify  = require('gulp-uglify');
 
