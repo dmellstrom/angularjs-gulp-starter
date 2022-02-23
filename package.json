@@ -14,7 +14,7 @@
     "angular": "^1.8.2",
     "angular-animate": "^1.8.2",
     "angular-aria": "^1.8.2",
-    "angular-material": "^1.2.2",
+    "angular-material": "^1.2.4",
     "angular-messages": "^1.8.2",
     "angular-route": "^1.8.2"
   },
@@ -40,7 +40,7 @@
     "karma": "^6.3.4",
     "karma-chrome-launcher": "^3.1.0",
     "karma-jasmine": "^4.0.1",
-    "node-sass": "^6.0.1",
-    "protractor": "^7.0.0"
+    "protractor": "^7.0.0",
+    "sass": "^1.49.8"
   }
 }
