@@ -6,6 +6,8 @@
 
 ## Getting Started
 
+    git clone --depth 1 git@github.com:dmellstrom/angularjs-gulp-starter
+    cd angularjs-gulp-starter/
     npm install
     npm start
 
