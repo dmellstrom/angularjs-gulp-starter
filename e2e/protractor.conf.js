@@ -3,7 +3,11 @@ exports.config = {
   allScriptsTimeout: 11000,
 
   specs: [
-    '*.js'
+    '**/*.js'
+  ],
+
+  exclude: [
+    'start.js'
   ],
 
   capabilities: {

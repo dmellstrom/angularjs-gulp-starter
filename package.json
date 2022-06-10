@@ -6,6 +6,7 @@
     "start": "gulp",
     "test": "karma start karma.conf.js",
     "e2e": "protractor e2e/protractor.conf.js",
+    "test-start": "protractor e2e/protractor.conf.js --specs=e2e/start.js --exclude=!e2e/start.js",
     "update-webdriver": "webdriver-manager update",
     "build": "gulp build",
     "preview": "gulp dist_serve"
